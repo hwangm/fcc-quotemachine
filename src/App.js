@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import {
   Navbar,
   NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
   Jumbotron,
-  Button } from 'reactstrap';
+  Button,
+  Badge } from 'reactstrap';
 
 class App extends Component {
   render() {
@@ -71,13 +68,16 @@ class Content extends Component {
   }
 
   render() {
+    let twitterHref = 'https://twitter.com/intent/tweet?text='+encodeURI(this.state.quote+' - '+this.state.author);
+    console.log(twitterHref);
     return (
       <div>
-        <Jumbotron>
+        <Jumbotron id="quote-box">
           <h3>Welcome to the Random Quote Generator!</h3>
           <p>Click the button below to generate a random quote.</p>
           <QuoteContent quote={this.state.quote} author={this.state.author} />
-          <Button color="primary" onClick={() => this.generateQuote()}>Randomize!</Button>
+          <Button id="new-quote" color="primary" onClick={() => this.generateQuote()}>Randomize!</Button>
+          <Badge id="tweet-quote" target="_blank" href={'https://twitter.com/intent/tweet?text='+encodeURI(this.state.quote+' - '+this.state.author)}>Tweet</Badge>
         </Jumbotron>
       </div>
     )
@@ -88,7 +88,8 @@ class QuoteContent extends Component {
   render() {
     return (
       <div>
-        <h2>{this.props.quote} -{this.props.author}</h2>
+        <h2 id="text">{this.props.quote}</h2>
+        <p id="author">-{this.props.author}</p>
         <br />
       </div>
     )
