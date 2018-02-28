@@ -68,16 +68,27 @@ class Content extends Component {
   }
 
   render() {
-    let twitterHref = 'https://twitter.com/intent/tweet?text='+encodeURI(this.state.quote+' - '+this.state.author);
-    console.log(twitterHref);
+    let styles = {
+      fontSize: '25px'
+    };
+
     return (
-      <div>
-        <Jumbotron id="quote-box">
+      <div className='container'>
+        <Jumbotron id="quote-box" className="mx-auto">
           <h3>Welcome to the Random Quote Generator!</h3>
           <p>Click the button below to generate a random quote.</p>
           <QuoteContent quote={this.state.quote} author={this.state.author} />
-          <Button id="new-quote" color="primary" onClick={() => this.generateQuote()}>Randomize!</Button>
-          <Badge id="tweet-quote" target="_blank" href={'https://twitter.com/intent/tweet?text='+encodeURI(this.state.quote+' - '+this.state.author)}>Tweet</Badge>
+          <div className="d-flex justify-content-between align-items-stretch">
+            <Button id="new-quote" color="primary" onClick={() => this.generateQuote()}>Randomize!</Button>
+            <Badge 
+            id="tweet-quote" 
+            color="primary"
+            target="_blank"
+            style={styles}
+            className="d-flex flex-column justify-content-center" 
+            href={'https://twitter.com/intent/tweet?text='+encodeURI(this.state.quote+' - '+this.state.author)}>
+              <i className="fa fa-twitter-square"></i></Badge>
+          </div>
         </Jumbotron>
       </div>
     )
