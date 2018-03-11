@@ -8,11 +8,39 @@ import {
   Badge } from 'reactstrap';
 
 class App extends Component {
+
+  generateBaseColor(){
+    let [x, y, z] = Array.from(new Array(3), () => Math.floor(Math.random() * 255));
+    let baseColor = [x, y, z];
+    let backgroundColor = Array.from(new Array(3), () => Math.floor(Math.random() * 255));
+    let inverse = baseColor.map(e => 255 - e);
+  
+    let evenNewerColor = baseColor.map(e => e*6);
+    
+    console.log(baseColor);
+    return [
+      baseColor,
+      inverse,
+      backgroundColor
+    ]
+  }
+
   render() {
+    let colors = this.generateBaseColor();
+    let backgroundColor = '#' + colors[2].map(e => e.toString(16)).join('');
+    let contentColor = '#' + colors[0].map(e => e.toString(16)).join('');
+    let fontColor = '#' + colors[1].map(e => e.toString(16)).join('');
+
+    document.body.style.backgroundColor = backgroundColor;
+    let compColors = [
+      contentColor,
+      fontColor
+    ]
+
     return (
       <div className="App">
-        <Header />
-        <Content />
+        <Header colors={compColors}/>
+        <Content colors={compColors}/>
       </div>
     );
   }
@@ -20,9 +48,13 @@ class App extends Component {
 
 class Header extends Component {
   render() {
+    let styles = {
+      backgroundColor: this.props.colors[0],
+      color: this.props.colors[1]
+    };
     return (
       <div>
-        <Navbar color="faded" light expand="md">
+        <Navbar style={styles} color="faded" light expand="md">
           <NavbarBrand href="/">Random Quote Generator</NavbarBrand>
         </Navbar>
       </div>
@@ -42,7 +74,6 @@ class Content extends Component {
   }
 
   generateQuote(){
-    console.log('generating quote');
     const proxyurl="https://cors-anywhere.herokuapp.com/";
     return fetch(proxyurl+'http://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en', 
       { 
@@ -72,9 +103,16 @@ class Content extends Component {
       fontSize: '25px'
     };
 
+    let jumbotronStyles = {
+      backgroundColor: this.props.colors[0],
+      color: this.props.colors[1]
+    }
+
     return (
       <div className='container'>
-        <Jumbotron id="quote-box" className="mx-auto">
+        <br />
+        <br />
+        <Jumbotron id="quote-box" className="mx-auto" style={jumbotronStyles}>
           <h3>Welcome to the Random Quote Generator!</h3>
           <p>Click the button below to generate a random quote.</p>
           <QuoteContent quote={this.state.quote} author={this.state.author} />
@@ -97,13 +135,25 @@ class Content extends Component {
 
 class QuoteContent extends Component {
   render() {
-    return (
-      <div>
-        <h2 id="text">{this.props.quote}</h2>
-        <p id="author">-{this.props.author}</p>
-        <br />
-      </div>
-    )
+    if(this.props.quote != ''){
+      return (
+        <div>
+          <h2 id="text">{this.props.quote}</h2>
+          <p id="author">-{this.props.author}</p>
+          <br />
+        </div>
+      )
+    }
+    else{
+      return (
+        <div>
+          <h2 id="text">{this.props.quote}</h2>
+          <p id="author">{this.props.author}</p>
+          <br />
+        </div>
+      )
+    }
+    
   }
 }
 
