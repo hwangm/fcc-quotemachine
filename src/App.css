@@ -1,3 +1,6 @@
+body{
+  background-color: #6699CC;
+}
 .App-header {
   background-color: #222;
   height: 150px;
@@ -17,3 +20,19 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+nav{
+  background-color: #FFE19C;
+}
+
+#quote-box{
+  background-color: #FFE19C;
+  box-shadow: -5px 5px 10px #DB9D47;
+}
+
+/* #new-quote{
+  background-color: #FF3C38;
+  border: 1px solid #FF3C38;
+} */
+
+
